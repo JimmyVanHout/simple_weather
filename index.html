@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="index.js">
+        </script>
+        <link rel="stylesheet" href="index.css">
+    <body>
+        <div id="weather_forecast_container">
+            <h1>Weather Forecast</h1>
+            <div id="location_container">
+            </div>
+            <div id="current_conditions_container">
+                <h2>Current Conditions</h2>
+                <div id="current_conditions_data_container">
+                    <div id="current_description_container">
+                        <p id="current_description_text"></p>
+                    </div>
+                    <div id="current_weather_image">
+                    </div>
+                    <div id="current_temperature_container">
+                        <p id="current_temperature_text"></p>
+                    </div>
+                    <div id="conditions_grid">
+                        <div id="current_wind_velocity_container" class="conditions_grid_item">
+                            <p id ="current_wind_velocity_text">Wind: </p>
+                        </div>
+                        <div id="current_sea_level_pressure_container" class="conditions_grid_item">
+                            <p id="current_sea_level_pressure_text">Sea Level Pressure: </p>
+                        </div>
+                        <div id="current_visibility_container" class="conditions_grid_item">
+                            <p id="current_visibility_text">Visibility: </p>
+                        </div>
+                        <div id="current_relative_humidity_container" class="conditions_grid_item">
+                            <p id="current_relative_humidity_text">Relative Humidity: </p>
+                        </div>
+                        <div id="current_wind_chill_container" class="conditions_grid_item">
+                            <p id="current_wind_chill_text">Wind Chill: </p>
+                        </div>
+                        <div id="current_heat_index_container" class="conditions_grid_item">
+                            <p id="current_heat_index_text">Heat Index: </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div id="hourly_forecast_container">
+                <h2>Hourly Forecast</h2>
+                <div id="hourly_forecast_data_container" class="scrollable_container">
+                </div>
+            </div>
+            <br>
+            <br>
+            <div id="semi_daily_forecast_container">
+                <h2>Daily Forecast</h2>
+                <div id="semi_daily_forecast_data_container" class="scrollable_container">
+                </div>
+            </div>
+            <br>
+        </div>
+        <hr>
+        <div id="copyright_container">
+            <p id="copyright_text">&copy 2022 Jimmy Van Hout</p>
+        </div>
+    </body>
+</html>
