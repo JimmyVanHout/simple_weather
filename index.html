@@ -9,17 +9,19 @@
             <h1>Weather Forecast</h1>
             <div id="location_container">
             </div>
+            <br>
             <div id="current_conditions_container">
                 <h2>Current Conditions</h2>
                 <div id="current_conditions_data_container">
-                    <div id="current_description_container">
-                        <p id="current_description_text"></p>
+                    <div id="current_temperature_and_description_container">
+                        <div id="current_temperature_container">
+                            <span id="current_temperature_text"></span>
+                        </div>
+                        <div id="current_description_container">
+                            <span id="current_description_text"></span>
+                        </div>
                     </div>
-                    <div id="current_weather_image">
-                    </div>
-                    <div id="current_temperature_container">
-                        <p id="current_temperature_text"></p>
-                    </div>
+                    <br>
                     <div id="conditions_grid">
                         <div id="current_wind_velocity_container" class="conditions_grid_item">
                             <p id ="current_wind_velocity_text">Wind: </p>
@@ -42,13 +44,11 @@
                     </div>
                 </div>
             </div>
-            <br>
             <div id="hourly_forecast_container">
                 <h2>Hourly Forecast</h2>
                 <div id="hourly_forecast_data_container" class="scrollable_container">
                 </div>
             </div>
-            <br>
             <br>
             <div id="semi_daily_forecast_container">
                 <h2>Daily Forecast</h2>
@@ -57,8 +57,8 @@
             </div>
             <br>
         </div>
-        <hr>
-        <div id="copyright_container">
+        <div id="footer">
+            <p id="weather_data_provider_text">Weather data retrieved from <a href="https://www.weather.gov/documentation/services-web-api" target="_blank">Weather.gov</a></p>
             <p id="copyright_text">&copy 2022 Jimmy Van Hout</p>
         </div>
     </body>

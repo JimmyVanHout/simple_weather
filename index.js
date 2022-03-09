@@ -98,9 +98,9 @@ async function getHourlyForecast(grid) {
 }
 
 function fillLatestObservationData(latestObservation) {
-    let currentConditionsContainer = document.getElementById("current_conditions_data_container");
     let conditionsGrid = document.getElementById("conditions_grid");
-    let leafChildren = Array.from(currentConditionsContainer.children).concat(Array.from(conditionsGrid.children))
+    let currentTempAndDescrContainer = document.getElementById("current_temperature_and_description_container");
+    let leafChildren = Array.from(conditionsGrid.children).concat(Array.from(currentTempAndDescrContainer.children));
     for (container of leafChildren) {
         let lst = container.id.split("_");
         if (lst.length == 2) {
@@ -141,23 +141,33 @@ function addContainer(parent, containerID="", containerClass=null) {
     return container;
 }
 
+function shouldAddHFWindData() {
+    return false;
+}
+
+function shouldAddSDFWindData() {
+    return false;
+}
+
 function fillHourlyForecastData(hourlyForecast) {
     let hourlyForecastContainer = document.getElementById("hourly_forecast_data_container");
-    hourlyForecastContainer.appendChild(document.createElement("hr"));
+    let addWindData = shouldAddHFWindData();
     for (let i = 0; i < hourlyForecast.length; i++) {
         let periodContainer = document.createElement("div");
-        periodContainer.id = "period_".concat(i.toString(), "_container");
+        periodContainer.id = "hourly_forecast_period_".concat(i.toString(), "_container");
         periodContainer.classList.add("hourly_forecast_period_container");
-        if (hourlyForecast[i].startTime.length > 0 && hourlyForecast[i].endTime.length > 0) {
-            if (i == 0 || (hourlyForecast[i].startTime.match(/(\d+)\:/)?.[1] == 12 && hourlyForecast[i].startTime.split(" ")[1] == "AM")) {
-                fillData(hourlyForecastContainer, hourlyForecast[i].dayOfWeek, "", "hourly_forecast_day_of_week_container", "hourly_forecast_day_of_week_text", "h4");
-                hourlyForecastContainer.appendChild(document.createElement("hr"));
-            }
-            fillData(periodContainer, hourlyForecast[i].dayOfWeek.concat(" ", hourlyForecast[i].startTime, " - ", hourlyForecast[i].endTime), "hourly_forecast_period_".concat(i.toString(), "_time"), "hourly_forecast_time_container", "hourly_forecast_time_text");
+        fillData(periodContainer, hourlyForecast[i].dayOfWeek.concat(" ", hourlyForecast[i].startTime, " - ", hourlyForecast[i].endTime), "hourly_forecast_period_".concat(i.toString(), "_time"), "hourly_forecast_time_container", "hourly_forecast_time_text", "span");
+        let weatherDataContainer = document.createElement("div");
+        weatherDataContainer.id = "hourly_forecast_period_".concat(i.toString(), "_weather_data_container");
+        weatherDataContainer.classList.add("hourly_forecast_weather_data_container");
+        fillDataInContainer(weatherDataContainer, hourlyForecast[i].temperature, "hourly_forecast_period_".concat(i.toString(), "_temperature"), "hourly_forecast_temperature_text", "span");
+        weatherDataContainer.appendChild(document.createElement("br"));
+        fillDataInContainer(weatherDataContainer, hourlyForecast[i].description, "hourly_forecast_period_".concat(i.toString(), "_description"), "hourly_forecast_description_text", "span");
+        if (addWindData) {
+            weatherDataContainer.appendChild(document.createElement("br"));
+            fillDataInContainer(weatherDataContainer, "Wind: ".concat(hourlyForecast[i].windVelocity), "hourly_forecast_period_".concat(i.toString(), "_wind_velocity"), "hourly_forecast_wind_velocity_text", "span");
         }
-        fillData(periodContainer, hourlyForecast[i].description, "hourly_forecast_period_".concat(i.toString(), "_description"), "hourly_forecast_description_container", "hourly_forecast_description_text");
-        fillData(periodContainer, hourlyForecast[i].temperature, "hourly_forecast_period_".concat(i.toString(), "_temperature"), "hourly_forecast_temperature_container", "hourly_forecast_temperature_text");
-        fillData(periodContainer, "Wind: ".concat(hourlyForecast[i].windVelocity), "hourly_forecast_period_".concat(i.toString(), "_wind_velocity"), "hourly_forecast_wind_velocity_container", "hourly_forecast_wind_velocity_text");
+        periodContainer.appendChild(weatherDataContainer);
         hourlyForecastContainer.appendChild(periodContainer);
         if (i != hourlyForecast.length - 1) {
             hourlyForecastContainer.appendChild(document.createElement("hr"));
@@ -167,14 +177,23 @@ function fillHourlyForecastData(hourlyForecast) {
 
 function fillSemiDailyForecastData(semiDailyForecast) {
     let semiDailyForecastContainer = document.getElementById("semi_daily_forecast_data_container");
+    let addWindData = shouldAddSDFWindData();
     for (let i = 0; i < semiDailyForecast.length; i++) {
         let periodContainer = document.createElement("div");
-        periodContainer.id = "period_".concat(i.toString(), "_container");
+        periodContainer.id = "semi_daily_forecast_period_".concat(i.toString(), "_container");
         periodContainer.classList.add("semi_daily_forecast_period_container");
-        fillData(periodContainer, semiDailyForecast[i].name, "semi_daily_forecast_period_".concat(i.toString(), "_name"), "semi_daily_forecast_name_container", "semi_daily_forecast_name_text", "h4");
-        fillData(periodContainer, semiDailyForecast[i].description, "semi_daily_forecast_period_".concat(i.toString(), "_description"), "semi_daily_forecast_description_container", "semi_daily_forecast_description_text");
-        fillData(periodContainer, semiDailyForecast[i].temperature, "semi_daily_forecast_period_".concat(i.toString(), "_temperature"), "semi_daily_forecast_temperature_container", "semi_daily_forecast_temperature_text");
-        fillData(periodContainer, "Wind: ".concat(semiDailyForecast[i].windVelocity), "semi_daily_forecast_period_".concat(i.toString(), "_wind_velocity"), "semi_daily_forecast_wind_velocity_container", "semi_daily_forecast_wind_velocity_text");
+        fillData(periodContainer, semiDailyForecast[i].name, "semi_daily_forecast_period_".concat(i.toString(), "_name"), "semi_daily_forecast_name_container", "semi_daily_forecast_name_text", "span");
+        let weatherDataContainer = document.createElement("div");
+        weatherDataContainer.id = "semi_daily_forecast_period_".concat(i.toString(), "_weather_data_container");
+        weatherDataContainer.classList.add("semi_daily_forecast_weather_data_container");
+        fillDataInContainer(weatherDataContainer, semiDailyForecast[i].temperature, "semi_daily_forecast_period_".concat(i.toString(), "_temperature"), "semi_daily_forecast_temperature_text", "span");
+        weatherDataContainer.appendChild(document.createElement("br"));
+        fillDataInContainer(weatherDataContainer, semiDailyForecast[i].description, "semi_daily_forecast_period_".concat(i.toString(), "_description"), "semi_daily_forecast_description_text", "span");
+        if (addWindData) {
+            weatherDataContainer.appendChild(document.createElement("br"));
+            fillDataInContainer(weatherDataContainer, "Wind: ".concat(semiDailyForecast[i].windVelocity), "semi_daily_forecast_period_".concat(i.toString(), "_wind_velocity"), "semi_daily_forecast_wind_velocity_text", "span");
+        }
+        periodContainer.appendChild(weatherDataContainer);
         semiDailyForecastContainer.appendChild(periodContainer);
         if (i != semiDailyForecast.length - 1) {
             semiDailyForecastContainer.appendChild(document.createElement("hr"));

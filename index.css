@@ -8,57 +8,57 @@ body {
 }
 h1 {
     text-align: center;
-    font-size: 3.2rem;
+    font-size: 3.4rem;
 }
 h2 {
     text-align: center;
-    font-size: 2.4rem;
+    font-size: 2.5rem;
 }
 h3 {
     text-align: center;
     font-size: 1.5rem;
 }
-h4 {
-    text-align: center;
-    font-size: 1.4rem;
-}
 .scrollable_container {
     overflow: auto;
-}
-.hourly_forecast_day_of_week_text {
-    text-align: center;
+    border: solid;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .conditions_grid_item {
     text-align: center;
 }
-.hourly_forecast_description_text {
-    text-align: center;
-}
 .hourly_forecast_temperature_text {
-    text-align: center;
     font-size: 1.6em;
 }
-.hourly_forecast_wind_velocity_text {
-    text-align: center;
-}
-.semi_daily_forecast_name_text {
-    text-align: center;
-}
-.semi_daily_forecast_description_text {
-    text-align: center;
-}
 .semi_daily_forecast_temperature_text {
-    text-align: center;
     font-size: 1.6rem;
 }
-.semi_daily_forecast_wind_velocity_text {
+.semi_daily_forecast_period_container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.semi_daily_forecast_weather_data_container {
+    text-align: right;
+    padding-right: 20px;
+}
+.hourly_forecast_period_container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.hourly_forecast_weather_data_container {
+    text-align: right;
+    padding-right: 20px;
+}
+#current_temperature_and_description_container {
     text-align: center;
 }
 #current_description_text {
     font-size: 1.7rem;
 }
 #current_temperature_text {
-    font-size: 2rem;
+    font-size: 3rem;
 }
 #hourly_forecast_data_container {
     height: 400px;
@@ -80,6 +80,6 @@ h4 {
 #current_temperature_text {
     text-align: center;
 }
-#copyright_text {
+#footer {
     text-align: center;
 }
