@@ -5,6 +5,7 @@
         <meta name="description" content="A simple site for getting the weather forecast.">
         <title>Simple Weather</title>
         <script src="index.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
@@ -49,12 +50,22 @@
             </div>
             <div id="hourly_forecast_container">
                 <h2>Hourly Forecast</h2>
+                <br>
+                <div id="hourly_forecast_graph_container">
+                    <canvas id="hourly_forecast_graph"></canvas>
+                </div>
+                <br>
                 <div id="hourly_forecast_data_container" class="scrollable_container">
                 </div>
             </div>
             <br>
             <div id="semi_daily_forecast_container">
                 <h2>Daily Forecast</h2>
+                <br>
+                <div id="semi_daily_forecast_graph_container">
+                    <canvas id="semi_daily_forecast_graph"></canvas>
+                </div>
+                <br>
                 <div id="semi_daily_forecast_data_container" class="scrollable_container">
                 </div>
             </div>

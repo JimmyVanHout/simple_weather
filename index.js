@@ -45,14 +45,14 @@ async function getLatestObservation(station) {
     let observationData = await fetch(`https://api.weather.gov/stations/${station.id}/observations/latest`).then(response => response.json());
     observationData = observationData["properties"];
     let observation = {
-        description: observationData["textDescription"] ?? "",
-        temperature: observationData["temperature"]["value"] && observationData["temperature"]["unitCode"] ? getTemperature(observationData["temperature"]["value"], observationData["temperature"]["unitCode"]) : "",
-        windVelocity: observationData["windSpeed"]["value"] && observationData["windDirection"]["value"] && observationData["windSpeed"]["unitCode"] ? getWindVelocity(observationData["windSpeed"]["value"], observationData["windDirection"]["value"], observationData["windSpeed"]["unitCode"]) : "",
-        seaLevelPressure: observationData["seaLevelPressure"]["value"] && observationData["seaLevelPressure"]["unitCode"] ? getPressure(observationData["seaLevelPressure"]["value"], observationData["seaLevelPressure"]["unitCode"]) : "",
-        visibility: observationData["visibility"]["value"] && observationData["visibility"]["unitCode"] ? getVisibility(observationData["visibility"]["value"], observationData["visibility"]["unitCode"]) : "",
-        relativeHumidity: observationData["relativeHumidity"]["value"] ? getRelativeHumidity(observationData["relativeHumidity"]["value"]) : "",
-        windChill: observationData["windChill"]["value"] && observationData["windChill"]["unitCode"] ? getTemperature(observationData["windChill"]["value"], observationData["windChill"]["unitCode"]) : "",
-        heatIndex: observationData["heatIndex"]["value"] && observationData["heatIndex"]["unitCode"] ? getTemperature(observationData["heatIndex"]["value"], observationData["heatIndex"]["unitCode"]) : "",
+        description: observationData["textDescription"] ?? "--",
+        temperature: observationData["temperature"]["value"] && observationData["temperature"]["unitCode"] ? getTemperature(observationData["temperature"]["value"], observationData["temperature"]["unitCode"]) : "-- \u00B0F",
+        windVelocity: observationData["windSpeed"]["value"] && observationData["windDirection"]["value"] && observationData["windSpeed"]["unitCode"] ? getWindVelocity(observationData["windSpeed"]["value"], observationData["windDirection"]["value"], observationData["windSpeed"]["unitCode"]) : "--",
+        seaLevelPressure: observationData["seaLevelPressure"]["value"] && observationData["seaLevelPressure"]["unitCode"] ? getPressure(observationData["seaLevelPressure"]["value"], observationData["seaLevelPressure"]["unitCode"]) : "--",
+        visibility: observationData["visibility"]["value"] && observationData["visibility"]["unitCode"] ? getVisibility(observationData["visibility"]["value"], observationData["visibility"]["unitCode"]) : "--",
+        relativeHumidity: observationData["relativeHumidity"]["value"] ? getRelativeHumidity(observationData["relativeHumidity"]["value"]) : "--",
+        windChill: observationData["windChill"]["value"] && observationData["windChill"]["unitCode"] ? getTemperature(observationData["windChill"]["value"], observationData["windChill"]["unitCode"]) : "--",
+        heatIndex: observationData["heatIndex"]["value"] && observationData["heatIndex"]["unitCode"] ? getTemperature(observationData["heatIndex"]["value"], observationData["heatIndex"]["unitCode"]) : "--",
     }
     return observation;
 }
@@ -175,6 +175,31 @@ function fillHourlyForecastData(hourlyForecast) {
     }
 }
 
+function drawHourlyForecastGraph(hourlyForecast) {
+    let startTimes = hourlyForecast.map(period => period.dayOfWeek.concat(" ", period.startTime));
+    let temperatures = hourlyForecast.map(period => period.temperature.split(" ")[0]);
+    let canvas = document.getElementById("hourly_forecast_graph");
+    let chart = new Chart(canvas, {
+        type: "line",
+        data: {
+            labels: startTimes,
+            datasets: [{
+                label: "Temperature (\u00B0F)",
+                data: temperatures,
+                backgroundColor: "white",
+                borderColor: "green",
+            }]
+        },
+        options: {
+            elements: {
+                point: {
+                    radius: 0,
+                },
+            },
+        },
+    });
+}
+
 function fillSemiDailyForecastData(semiDailyForecast) {
     let semiDailyForecastContainer = document.getElementById("semi_daily_forecast_data_container");
     let addWindData = shouldAddSDFWindData();
@@ -199,6 +224,41 @@ function fillSemiDailyForecastData(semiDailyForecast) {
             semiDailyForecastContainer.appendChild(document.createElement("hr"));
         }
     }
+}
+
+function drawSemiDailyForecastGraph(semiDailyForecast) {
+    let names = semiDailyForecast.map(period => {
+        let name = "";
+        if (!period.name.includes("Night")) {
+            name = period.name;
+            if (period.name.includes(" ")) {
+                name = name.split(" ");
+            }
+        }
+        return name;
+    });
+    let temperatures = semiDailyForecast.map(period => period.temperature.split(" ")[0]);
+    let canvas = document.getElementById("semi_daily_forecast_graph");
+    let chart = new Chart(canvas, {
+        type: "line",
+        data: {
+            labels: names,
+            datasets: [{
+                label: "Temperature (\u00B0F)",
+                data: temperatures,
+                backgroundColor: "white",
+                borderColor: "green",
+                tension: 0.1,
+            }]
+        },
+        options: {
+            elements: {
+                point: {
+                    radius: 0,
+                },
+            },
+        },
+    });
 }
 
 function getTime(timeData) {
@@ -378,10 +438,16 @@ async function main() {
     .then(latestObservation => fillLatestObservationData(latestObservation))
     .catch(e => console.log(e));
     getHourlyForecast(grid)
-    .then(hourlyForecast => fillHourlyForecastData(hourlyForecast))
+    .then(hourlyForecast => {
+        drawHourlyForecastGraph(hourlyForecast);
+        fillHourlyForecastData(hourlyForecast);
+    })
     .catch(e => console.log(e));
     getSemiDailyForecast(grid)
-    .then(semiDailyForecast => fillSemiDailyForecastData(semiDailyForecast))
+    .then(semiDailyForecast => {
+        drawSemiDailyForecastGraph(semiDailyForecast);
+        fillSemiDailyForecastData(semiDailyForecast);
+    })
     .catch(e => console.log(e));
 }
 
