@@ -30,10 +30,10 @@ h3 {
     text-align: center;
 }
 .hourly_forecast_temperature_text {
-    font-size: 1.6rem;
+    font-size: 2rem;
 }
 .semi_daily_forecast_temperature_text {
-    font-size: 1.6rem;
+    font-size: 2rem;
 }
 .semi_daily_forecast_period_container {
     display: grid;
