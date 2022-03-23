@@ -227,29 +227,43 @@ function fillSemiDailyForecastData(semiDailyForecast) {
 }
 
 function drawSemiDailyForecastGraph(semiDailyForecast) {
-    let names = semiDailyForecast.map(period => {
-        let name = "";
-        if (!period.name.includes("Night")) {
-            name = period.name;
-            if (period.name.includes(" ")) {
-                name = name.split(" ");
-            }
-        }
-        return name;
-    });
+    let names = semiDailyForecast.filter(period => !period.name.includes("Night")).map(period => period.name);
     let temperatures = semiDailyForecast.map(period => period.temperature.split(" ")[0]);
+    let dayTemperatures = [];
+    let nightTemperatures = [];
+    console.log(semiDailyForecast);
+    console.log(names);
+    for (let i = 0; i < temperatures.length; i++) {
+        if (semiDailyForecast[i].name.includes("Tonight")) {
+            dayTemperatures.push(null);
+            nightTemperatures.push(temperatures[i]);
+        } else if (semiDailyForecast[i].name.includes("Night")) {
+            nightTemperatures.push(temperatures[i]);
+        } else {
+            dayTemperatures.push(temperatures[i]);
+        }
+    }
     let canvas = document.getElementById("semi_daily_forecast_graph");
     let chart = new Chart(canvas, {
         type: "line",
         data: {
             labels: names,
-            datasets: [{
-                label: "Temperature (\u00B0F)",
-                data: temperatures,
-                backgroundColor: "white",
-                borderColor: "green",
-                tension: 0.1,
-            }]
+            datasets: [
+                {
+                    label: "Daytime Temperature (\u00B0F)",
+                    data: dayTemperatures,
+                    backgroundColor: "white",
+                    borderColor: "red",
+                    tension: 0.1,
+                },
+                {
+                    label: "Nighttime Temperature (\u00B0F)",
+                    data: nightTemperatures,
+                    backgroundColor: "white",
+                    borderColor: "blue",
+                    tension: 0.1,
+                },
+            ],
         },
         options: {
             elements: {
