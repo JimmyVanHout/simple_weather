@@ -51,6 +51,10 @@ h3 {
     text-align: right;
     padding-right: 20px;
 }
+.error_message {
+    text-align: center;
+    color: red;
+}
 #current_temperature_and_description_container {
     text-align: center;
 }

@@ -175,7 +175,10 @@ function fillHourlyForecastData(hourlyForecast) {
     }
 }
 
-function drawHourlyForecastGraph(hourlyForecast) {
+function drawHourlyForecastGraph(hourlyForecast, all=true) {
+    if (!all) {
+        hourlyForecast = hourlyForecast.slice(0, 24);
+    }
     let startTimes = hourlyForecast.map(period => period.dayOfWeek.concat(" ", period.startTime));
     let temperatures = hourlyForecast.map(period => period.temperature.split(" ")[0]);
     let canvas = document.getElementById("hourly_forecast_graph");
@@ -231,8 +234,6 @@ function drawSemiDailyForecastGraph(semiDailyForecast) {
     let temperatures = semiDailyForecast.map(period => period.temperature.split(" ")[0]);
     let dayTemperatures = [];
     let nightTemperatures = [];
-    console.log(semiDailyForecast);
-    console.log(names);
     for (let i = 0; i < temperatures.length; i++) {
         if (semiDailyForecast[i].name.includes("night")) {
             dayTemperatures.push(null);
@@ -446,16 +447,45 @@ async function main() {
     .catch(e => console.log(e));
     getHourlyForecast(grid)
     .then(hourlyForecast => {
-        drawHourlyForecastGraph(hourlyForecast);
+        sessionStorage["hourlyForecast"] = JSON.stringify(hourlyForecast);
+        drawHourlyForecastGraph(hourlyForecast, false);
         fillHourlyForecastData(hourlyForecast);
     })
-    .catch(e => console.log(e));
+    .catch(e => {
+        console.log(e);
+        let hourlyForecastContainer = document.getElementById("hourly_forecast_container");
+        let lineBreaks = hourlyForecastContainer.getElementsByTagName("br");
+        while (lineBreaks.length > 0) {
+            hourlyForecastContainer.removeChild(lineBreaks[0]);
+        }
+        hourlyForecastContainer.removeChild(document.getElementById("hourly_forecast_graph_selector_container"));
+        hourlyForecastContainer.removeChild(document.getElementById("hourly_forecast_graph_container"));
+        hourlyForecastContainer.removeChild(document.getElementById("hourly_forecast_data_container"));
+        let errorMessage = document.createElement("p");
+        errorMessage.innerText = "Error getting hourly forecast data from server.";
+        errorMessage.classList.add("error_message");
+        hourlyForecastContainer.appendChild(errorMessage);
+    });
     getSemiDailyForecast(grid)
     .then(semiDailyForecast => {
+        sessionStorage["semiDailyForecast"] = JSON.stringify(semiDailyForecast);
         drawSemiDailyForecastGraph(semiDailyForecast);
         fillSemiDailyForecastData(semiDailyForecast);
     })
-    .catch(e => console.log(e));
+    .catch(e => {
+        console.log(e);
+        let semiDailyForecastContainer = document.getElementById("semi_daily_forecast_container");
+        let lineBreaks = hourlyForecastContainer.getElementsByTagName("br");
+        while (lineBreaks.length > 0) {
+            semiDailyForecastContainer.removeChild(lineBreaks[0]);
+        }
+        semiDailyForecastContainer.removeChild(document.getElementById("semi_daily_forecast_graph_container"));
+        semiDailyForecastContainer.removeChild(document.getElementById("semi_daily_forecast_data_container"));
+        let errorMessage = document.createElement("p");
+        errorMessage.innerText = "Error getting daily forecast data from server.";
+        errorMessage.classList.add("error_message");
+        semiDailyForecastContainer.appendChild(errorMessage);
+    });
 }
 
 main();
