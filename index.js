@@ -234,7 +234,7 @@ function drawSemiDailyForecastGraph(semiDailyForecast) {
     console.log(semiDailyForecast);
     console.log(names);
     for (let i = 0; i < temperatures.length; i++) {
-        if (semiDailyForecast[i].name.includes("Tonight")) {
+        if (semiDailyForecast[i].name.includes("night")) {
             dayTemperatures.push(null);
             nightTemperatures.push(temperatures[i]);
         } else if (semiDailyForecast[i].name.includes("Night")) {
@@ -264,13 +264,6 @@ function drawSemiDailyForecastGraph(semiDailyForecast) {
                     tension: 0.1,
                 },
             ],
-        },
-        options: {
-            elements: {
-                point: {
-                    radius: 0,
-                },
-            },
         },
     });
 }
