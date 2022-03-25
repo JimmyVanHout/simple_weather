@@ -182,6 +182,7 @@ function drawHourlyForecastGraph(hourlyForecast, all=true) {
     let startTimes = hourlyForecast.map(period => period.dayOfWeek.concat(" ", period.startTime));
     let temperatures = hourlyForecast.map(period => period.temperature.split(" ")[0]);
     let canvas = document.getElementById("hourly_forecast_graph");
+    Chart.getChart("hourly_forecast_graph")?.destroy();
     let chart = new Chart(canvas, {
         type: "line",
         data: {
