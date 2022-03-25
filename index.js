@@ -466,7 +466,7 @@ async function main() {
     getHourlyForecast(grid)
     .then(hourlyForecast => {
         sessionStorage["hourlyForecast"] = JSON.stringify(hourlyForecast);
-        drawHourlyForecastGraph(hourlyForecast, false);
+        drawHourlyForecastGraph(hourlyForecast, false, 0.1);
         fillHourlyForecastData(hourlyForecast);
     })
     .catch(e => {
