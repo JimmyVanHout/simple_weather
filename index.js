@@ -235,13 +235,25 @@ function drawSemiDailyForecastGraph(semiDailyForecast) {
     let dayTemperatures = [];
     let nightTemperatures = [];
     for (let i = 0; i < temperatures.length; i++) {
-        if (semiDailyForecast[i].name.includes("night")) {
-            dayTemperatures.push(null);
-            nightTemperatures.push(temperatures[i]);
-        } else if (semiDailyForecast[i].name.includes("Night")) {
-            nightTemperatures.push(temperatures[i]);
+        if (i == 0) {
+            if (semiDailyForecast[i].name.includes("night")) {
+                dayTemperatures.push(null);
+                nightTemperatures.push(temperatures[i]);
+            } else {
+                dayTemperatures.push(temperatures[i]);
+            }
+        } else if (i == 1) {
+            if (semiDailyForecast[i].name.includes("night")) {
+                nightTemperatures.push(temperatures[i]);
+            } else {
+                dayTemperatures.push(temperatures[i]);
+            }
         } else {
-            dayTemperatures.push(temperatures[i]);
+            if (semiDailyForecast[i].name.includes("Night")) {
+                nightTemperatures.push(temperatures[i]);
+            } else {
+                dayTemperatures.push(temperatures[i]);
+            }
         }
     }
     let canvas = document.getElementById("semi_daily_forecast_graph");
