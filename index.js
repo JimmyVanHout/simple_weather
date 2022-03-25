@@ -175,7 +175,7 @@ function fillHourlyForecastData(hourlyForecast) {
     }
 }
 
-function drawHourlyForecastGraph(hourlyForecast, all=true) {
+function drawHourlyForecastGraph(hourlyForecast, all=true, smoothness=0) {
     if (!all) {
         hourlyForecast = hourlyForecast.slice(0, 24);
     }
@@ -192,6 +192,7 @@ function drawHourlyForecastGraph(hourlyForecast, all=true) {
                 data: temperatures,
                 backgroundColor: "white",
                 borderColor: "green",
+                tension: smoothness,
             }]
         },
         options: {
@@ -231,7 +232,11 @@ function fillSemiDailyForecastData(semiDailyForecast) {
 }
 
 function drawSemiDailyForecastGraph(semiDailyForecast) {
-    let names = semiDailyForecast.filter(period => !period.name.includes("Night")).map(period => period.name);
+    let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let names = semiDailyForecast.filter(period => !period.name.includes("Night") && daysOfWeek.includes(period.name)).map(period => period.name);
+    let secondDayIndex = daysOfWeek.indexOf(names[0]);
+    let firstDay = secondDayIndex == 0 ? daysOfWeek[daysOfWeek.length - 1] : daysOfWeek[secondDayIndex - 1];
+    names.splice(0, 0, firstDay);
     let temperatures = semiDailyForecast.map(period => period.temperature.split(" ")[0]);
     let dayTemperatures = [];
     let nightTemperatures = [];

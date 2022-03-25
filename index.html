@@ -52,9 +52,9 @@
                 <h2>Hourly Forecast</h2>
                 <br>
                 <div id="hourly_forecast_graph_selector_container">
-                    <input type="radio" id="hourly_forecast_graph_selector_24_hour" name="hourly_forecast_graph_selector" value="hours_24" onclick="drawHourlyForecastGraph(JSON.parse(sessionStorage['hourlyForecast']), false)" checked>
+                    <input type="radio" id="hourly_forecast_graph_selector_24_hour" name="hourly_forecast_graph_selector" value="hours_24" onclick="drawHourlyForecastGraph(JSON.parse(sessionStorage['hourlyForecast']), false, 0.1)" checked>
                     <label for="hourly_forecast_graph_selector_24_hour">24 Hours</label>
-                    <input type="radio" id="hourly_forecast_graph_selector_week" name="hourly_forecast_graph_selector" value="hours_week" onclick="drawHourlyForecastGraph(JSON.parse(sessionStorage['hourlyForecast']), true)">
+                    <input type="radio" id="hourly_forecast_graph_selector_week" name="hourly_forecast_graph_selector" value="hours_week" onclick="drawHourlyForecastGraph(JSON.parse(sessionStorage['hourlyForecast']))">
                     <label for="hourly_forecast_graph_selector_week">Week</label>
                 </div>
                 <div id="hourly_forecast_graph_container">
