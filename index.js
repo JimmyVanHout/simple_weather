@@ -1,3 +1,49 @@
+let imageNames = {
+    "cloudyDay": "cloudy.png",
+    "cloudyNight": "night_cloudy.png",
+    "fog": "fog.png",
+    "lightning": "lightning.png",
+    "clearDay": "sunny.png",
+    "clearNight": "night_clear.png",
+    "sunny": "sunny.png",
+    "partlyCloudy": "partly_cloudy.png",
+    "rainLikely": "rain_likely.png",
+    "rain": "rain.png",
+    "snow": "snow.png",
+    "thunderstorms": "thunderstorm.png",
+    "windy": "windy.png",
+    "winteryMix": "winter_mix.png",
+}
+
+function getImageName(isDaytime, text) {
+    let imageName = null;
+    if (text.includes("Fog")) {
+        imageName = imageNames["fog"];
+    } else if (text.includes("Thunderstorm")) {
+        imageName = imageNames["thunderstorms"];
+    } else if (text.includes("Lightning")) {
+        imageName = imageNames["lightning"];
+    } else if (text.includes("Rain")) {
+        imageName = imageNames["rain"];
+    } else if (text.includes("Snow")) {
+        imageName = imageNames["snow"];
+    } else if (text.includes("Wintery Mix")) {
+        imageName = imageNames["winteryMix"];
+    } else if (text.includes("Wind")) {
+        imageName = imageNames["windy"];
+    } else if (text.includes("Clear")) {
+        imageName = isDaytime ? imageNames["clearDay"] : imageNames["clearNight"];
+    } else if (text.includes("Sunny")) {
+        imageName = imageNames["sunny"];
+    } else if (text.includes("Partly Cloudy")) {
+        imageName = isDaytime ? imageNames["partlyCloudy"] : imageNames["cloudyNight"];
+    } else if (text.includes("Cloudy")) {
+        imageName = isDaytime ? imageNames["cloudyDay"] : imageNames["cloudyNight"];
+    }
+    imageName = imageName ? "images/".concat(imageName) : imageName;
+    return imageName;
+}
+
 function getUnitSystem() {
     return "imperial";
 }
@@ -167,11 +213,29 @@ function fillHourlyForecastData(hourlyForecast) {
             weatherDataContainer.appendChild(document.createElement("br"));
             fillDataInContainer(weatherDataContainer, "Wind: ".concat(hourlyForecast[i].windVelocity), "hourly_forecast_period_".concat(i.toString(), "_wind_velocity"), "hourly_forecast_wind_velocity_text", "span");
         }
-        periodContainer.appendChild(weatherDataContainer);
+        let dataAndImageContainer = document.createElement("div");
+        dataAndImageContainer.classList.add("hourly_forecast_data_and_image");
+        dataAndImageContainer.appendChild(weatherDataContainer);
+        let image = document.createElement("img");
+        image.src = hourlyForecast[i].startTime ? getImageName(isDayHourly(hourlyForecast[i].startTime), hourlyForecast[i].description) : "";
+        image.classList.add("hourly_forecast_image");
+        dataAndImageContainer.appendChild(image);
+        periodContainer.appendChild(dataAndImageContainer);
         hourlyForecastContainer.appendChild(periodContainer);
         if (i != hourlyForecast.length - 1) {
             hourlyForecastContainer.appendChild(document.createElement("hr"));
         }
+    }
+}
+
+function isDayHourly(startTime) {
+    let match = startTime.match(/(\d{1,2})\:\d{2} ((A|P)M)/);
+    let hour = parseInt(match[1]);
+    let dayPeriod = match[2];
+    if ((hour >= 6 && hour <= 11 && dayPeriod == "AM") || (((hour == 12) || (hour >= 1 && hour <= 5)) && dayPeriod == "PM")) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -223,12 +287,23 @@ function fillSemiDailyForecastData(semiDailyForecast) {
             weatherDataContainer.appendChild(document.createElement("br"));
             fillDataInContainer(weatherDataContainer, "Wind: ".concat(semiDailyForecast[i].windVelocity), "semi_daily_forecast_period_".concat(i.toString(), "_wind_velocity"), "semi_daily_forecast_wind_velocity_text", "span");
         }
-        periodContainer.appendChild(weatherDataContainer);
+        let dataAndImageContainer = document.createElement("div");
+        dataAndImageContainer.classList.add("semi_daily_forecast_data_and_image");
+        dataAndImageContainer.appendChild(weatherDataContainer);
+        let image = document.createElement("img");
+        image.src = semiDailyForecast[i].description ? getImageName(isDaySemiDaily(semiDailyForecast[i].name), semiDailyForecast[i].description) : "";
+        image.classList.add("semi_daily_forecast_image");
+        dataAndImageContainer.appendChild(image);
+        periodContainer.appendChild(dataAndImageContainer);
         semiDailyForecastContainer.appendChild(periodContainer);
         if (i != semiDailyForecast.length - 1) {
             semiDailyForecastContainer.appendChild(document.createElement("hr"));
         }
     }
+}
+
+function isDaySemiDaily(text) {
+    return (text.includes("Night") || text.includes("night") || text.includes("evening")) ? false : true;
 }
 
 function drawSemiDailyForecastGraph(semiDailyForecast) {
@@ -493,7 +568,7 @@ async function main() {
     .catch(e => {
         console.log(e);
         let semiDailyForecastContainer = document.getElementById("semi_daily_forecast_container");
-        let lineBreaks = hourlyForecastContainer.getElementsByTagName("br");
+        let lineBreaks = semiDailyForecastContainer.getElementsByTagName("br");
         while (lineBreaks.length > 0) {
             semiDailyForecastContainer.removeChild(lineBreaks[0]);
         }

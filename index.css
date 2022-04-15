@@ -42,6 +42,7 @@ h3 {
 .semi_daily_forecast_weather_data_container {
     text-align: right;
     padding-right: 20px;
+    display: inline-block;
 }
 .hourly_forecast_period_container {
     display: grid;
@@ -54,6 +55,22 @@ h3 {
 .error_message {
     text-align: center;
     color: red;
+}
+.semi_daily_forecast_image {
+    max-height: 4rem;
+}
+.semi_daily_forecast_data_and_image {
+    justify-self: end;
+    display: inline-flex;
+    justify-content: flex-end;
+}
+.hourly_forecast_image {
+    max-height: 4rem;
+}
+.hourly_forecast_data_and_image {
+    justify-self: end;
+    display: inline-flex;
+    justify-content: flex-end;
 }
 #current_temperature_and_description_container {
     text-align: center;
@@ -86,4 +103,5 @@ h3 {
 }
 #footer {
     text-align: center;
+    font-size: 1rem;
 }
