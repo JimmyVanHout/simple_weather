@@ -532,13 +532,13 @@ function fillDataInContainer(container, data, textID="", textClass=null, textEle
     container.appendChild(text);
 }
 
-async function main() {
-    let currentPosition = await getCurrentPosition();
-    let gridAndLocation = await getGridAndLocation(currentPosition);
+async function displayForecast(position) {
+    document.getElementById("weather_forecast_container").hidden = false;
+    let gridAndLocation = await getGridAndLocation(position);
     let grid = gridAndLocation[0];
     let location = gridAndLocation[1];
     fillDataInContainer(document.getElementById("location_container"), location, "location_text", null, "h3");
-    let closestStation = await getClosestStation(grid, currentPosition);
+    let closestStation = await getClosestStation(grid, position);
     getLatestObservation(closestStation)
     .then(latestObservation => fillLatestObservationData(latestObservation))
     .catch(e => console.log(e));
@@ -583,6 +583,47 @@ async function main() {
         errorMessage.classList.add("error_message");
         semiDailyForecastContainer.appendChild(errorMessage);
     });
+}
+
+function clearData() {
+    let locationContainer = document.getElementById("location_container");
+    while (locationContainer.firstChild) {
+        locationContainer.removeChild(locationContainer.firstChild);
+    }
+    let currentConditionsContainer = document.getElementById("current_conditions_container");
+    let elements = currentConditionsContainer.getElementsByTagName("span");
+    for (element of elements) {
+        element.innerText = "";
+    }
+    Chart.getChart("hourly_forecast_graph")?.destroy();
+    let hourlyForecastDataCntr = document.getElementById("hourly_forecast_data_container");
+    while(hourlyForecastDataCntr.firstChild) {
+        hourlyForecastDataCntr.removeChild(hourlyForecastDataCntr.firstChild);
+    }
+    Chart.getChart("semi_daily_forecast_graph")?.destroy();
+    let semiDailyForecastDataCntr = document.getElementById("semi_daily_forecast_data_container");
+    while(semiDailyForecastDataCntr.firstChild) {
+        semiDailyForecastDataCntr.removeChild(semiDailyForecastDataCntr.firstChild);
+    }
+}
+
+function main() {
+    document.getElementById("coordinates_input_button").addEventListener("click", ((input) => {
+        clearData();
+        let data = document.getElementById("coordinates_input").value.split(",").map(x => parseInt(x.trim()));
+        let position = {
+            "latitude": data[0],
+            "longitude": data[1],
+        }
+        displayForecast(position);
+    }));
+    document.getElementById("current_location_input_button").addEventListener("click", ((input) => {
+        clearData();
+        getCurrentPosition()
+        .then(currentPosition => displayForecast(currentPosition))
+        .catch(e => console.log(e));
+    }));
+    document.getElementById("weather_forecast_container").hidden = true;
 }
 
 main();

@@ -77,6 +77,11 @@ h3 {
 .period_divider {
     color: black;
 }
+#location_input_container {
+    display: flex;
+    column-gap: 4%;
+    justify-content: center;
+}
 #current_temperature_and_description_container {
     text-align: center;
 }
@@ -99,6 +104,7 @@ h3 {
 }
 #location_text {
     text-align: center;
+    font-size: 1.6rem;
 }
 #current_description_text {
     text-align: center;

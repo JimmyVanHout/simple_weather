@@ -4,16 +4,28 @@
         <meta charset="utf-8">
         <meta name="description" content="A simple site for getting the weather forecast.">
         <title>Simple Weather</title>
-        <script src="index.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
-        <div id="weather_forecast_container">
-            <h1>Simple Weather</h1>
-            <div id="location_container">
+        <h1>Simple Weather</h1>
+        <div id="location_container">
+        </div>
+        <br>
+        <div id="location_input_container">
+            <div id="current_location_input_container">
+                <input type="button" id="current_location_input_button" value="Use Current Location">
             </div>
-            <br>
+            <div>
+                <span>or</span>
+            </div>
+            <div id="coordinates_input_form">
+                <label for="coordinates_input">Enter Coordinates: </label>
+                <input type="text" id="coordinates_input" name="coordinates" placeholder="latitude, longitude">
+                <input type="button" id="coordinates_input_button" value="Submit">
+            </div>
+        </div>
+        <br>
+        <div id="weather_forecast_container" hidden>
             <div id="current_conditions_container">
                 <h2>Current Conditions</h2>
                 <div id="current_conditions_data_container">
@@ -28,22 +40,22 @@
                     <br>
                     <div id="conditions_grid">
                         <div id="current_wind_velocity_container" class="conditions_grid_item">
-                            <p id ="current_wind_velocity_text">Wind: </p>
+                            <p>Wind: <span id ="current_wind_velocity_text"></span></p>
                         </div>
                         <div id="current_sea_level_pressure_container" class="conditions_grid_item">
-                            <p id="current_sea_level_pressure_text">Sea Level Pressure: </p>
+                            <p>Sea Level Pressure: <span id="current_sea_level_pressure_text"></span></p>
                         </div>
                         <div id="current_visibility_container" class="conditions_grid_item">
-                            <p id="current_visibility_text">Visibility: </p>
+                            <p>Visibility: <span id="current_visibility_text"></span></p>
                         </div>
                         <div id="current_relative_humidity_container" class="conditions_grid_item">
-                            <p id="current_relative_humidity_text">Relative Humidity: </p>
+                            <p>Relative Humidity: <span id="current_relative_humidity_text"></span></p>
                         </div>
                         <div id="current_wind_chill_container" class="conditions_grid_item">
-                            <p id="current_wind_chill_text">Wind Chill: </p>
+                            <p>Wind Chill: <span id="current_wind_chill_text"></span></p>
                         </div>
                         <div id="current_heat_index_container" class="conditions_grid_item">
-                            <p id="current_heat_index_text">Heat Index: </p>
+                            <p>Heat Index: <span id="current_heat_index_text"></span></p>
                         </div>
                     </div>
                 </div>
@@ -84,5 +96,7 @@
             <p>Images &copy 2022 <a href="https://www.instagram.com/artbylilyxi/?hl=en" target="_blank">Lily Xi Gates</a> | Website &copy 2022 <a href="https://github.com/JimmyVanHout" target="_blank">Jimmy Van Hout</a> | Weather data provided by <a href="https://www.weather.gov/documentation/services-web-api" target="_blank">Weather.gov</a></p>
             <p>Other sites: <a href="https://www.otfitnessdata.com" target="_blank">OTFitnessData.com</a> - Analyze your Orangetheory Fitness workout data</p>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+        <script src="index.js"></script>
     </body>
 </html>
