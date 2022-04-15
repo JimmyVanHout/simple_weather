@@ -5,6 +5,8 @@ body {
     margin: auto;
     font-family: arial;
     font-size: 1.2rem;
+    color: black;
+    background-color: white;
 }
 h1 {
     text-align: center;
@@ -72,6 +74,9 @@ h3 {
     display: inline-flex;
     justify-content: flex-end;
 }
+.period_divider {
+    color: black;
+}
 #current_temperature_and_description_container {
     text-align: center;
 }
@@ -104,4 +109,25 @@ h3 {
 #footer {
     text-align: center;
     font-size: 1rem;
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        width: 80%;
+        max-width: 1000px;
+        min-width: 600px;
+        margin: auto;
+        font-family: arial;
+        font-size: 1.2rem;
+        color: white;
+        background-color: #121212;
+    }
+    a:link {
+        color: #9E9EFF;
+    }
+    a:visited {
+        color: #D0ADF0;
+    }
+    .period_divider {
+        color: white;
+    }
 }

@@ -223,7 +223,9 @@ function fillHourlyForecastData(hourlyForecast) {
         periodContainer.appendChild(dataAndImageContainer);
         hourlyForecastContainer.appendChild(periodContainer);
         if (i != hourlyForecast.length - 1) {
-            hourlyForecastContainer.appendChild(document.createElement("hr"));
+            let hr = document.createElement("hr");
+            hr.classList.add("period_divider");
+            hourlyForecastContainer.appendChild(hr);
         }
     }
 }
@@ -297,7 +299,9 @@ function fillSemiDailyForecastData(semiDailyForecast) {
         periodContainer.appendChild(dataAndImageContainer);
         semiDailyForecastContainer.appendChild(periodContainer);
         if (i != semiDailyForecast.length - 1) {
-            semiDailyForecastContainer.appendChild(document.createElement("hr"));
+            let hr = document.createElement("hr");
+            hr.classList.add("period_divider");
+            semiDailyForecastContainer.appendChild(hr);
         }
     }
 }
