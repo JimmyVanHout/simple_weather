@@ -81,6 +81,7 @@ async function getClosestStation(grid, currentCoordinates) {
             closestStation = {
                 id: stationData["properties"]["stationIdentifier"],
                 name: stationData["properties"]["name"],
+                timeZone: stationData["properties"]["timeZone"],
             };
         }
     }
@@ -143,10 +144,10 @@ async function getHourlyForecast(grid) {
     return periods;
 }
 
-function fillLatestObservationData(latestObservation) {
+function fillLatestObservationData(latestObservation, station) {
     let conditionsGrid = document.getElementById("conditions_grid");
-    let currentTempAndDescrContainer = document.getElementById("current_temperature_and_description_container");
-    let leafChildren = Array.from(conditionsGrid.children).concat(Array.from(currentTempAndDescrContainer.children));
+    let currentMainDataCntr = document.getElementById("current_main_data_container");
+    let leafChildren = Array.from(conditionsGrid.children).concat(Array.from(currentMainDataCntr.children));
     for (container of leafChildren) {
         let lst = container.id.split("_");
         if (lst.length == 2) {
@@ -158,6 +159,18 @@ function fillLatestObservationData(latestObservation) {
         if (prop in latestObservation) {
             let text = document.getElementById("current_".concat(snakeCase(prop), "_text"));
             text.innerText = text.innerText.concat(` ${latestObservation[prop]}`);
+        }
+    }
+    if (station.timeZone) {
+        let match = (new Date()).toLocaleString("en-us", {timeZone: station.timeZone})?.match(/(\d{1,2}\:\d{2})\:\d{2} ((?:A|P)M)/);
+        if (match) {
+            let hoursAndMin = match[1];
+            let dayPeriod = match[2];
+            let image = document.createElement("img");
+            image.id = "latest_observation_image";
+            image.src = getImageName(isDayHourly(hoursAndMin.concat(" ", dayPeriod)), latestObservation.description);
+            image.classList.add("latest_observation_image");
+            document.getElementById("current_conditions_image_container").appendChild(image);
         }
     }
 }
@@ -540,7 +553,7 @@ async function displayForecast(position) {
     fillDataInContainer(document.getElementById("location_container"), location, "location_text", null, "h3");
     let closestStation = await getClosestStation(grid, position);
     getLatestObservation(closestStation)
-    .then(latestObservation => fillLatestObservationData(latestObservation))
+    .then(latestObservation => fillLatestObservationData(latestObservation, closestStation))
     .catch(e => console.log(e));
     getHourlyForecast(grid)
     .then(hourlyForecast => {
@@ -590,6 +603,10 @@ function clearData() {
     while (locationContainer.firstChild) {
         locationContainer.removeChild(locationContainer.firstChild);
     }
+    let currentConditionsImageCntr = document.getElementById("current_conditions_image_container");
+    while (currentConditionsImageCntr.firstChild) {
+        currentConditionsImageCntr.removeChild(currentConditionsImageCntr.firstChild);
+    }
     let currentConditionsContainer = document.getElementById("current_conditions_container");
     let elements = currentConditionsContainer.getElementsByTagName("span");
     for (element of elements) {
@@ -608,7 +625,7 @@ function clearData() {
 }
 
 function main() {
-    document.getElementById("coordinates_input_button").addEventListener("click", ((input) => {
+    document.getElementById("coordinates_input_button").addEventListener("click", ((event) => {
         clearData();
         let data = document.getElementById("coordinates_input").value.split(",").map(x => parseInt(x.trim()));
         let position = {
@@ -617,13 +634,28 @@ function main() {
         }
         displayForecast(position);
     }));
-    document.getElementById("current_location_input_button").addEventListener("click", ((input) => {
+    document.getElementById("current_location_input_button").addEventListener("click", ((event) => {
         clearData();
         getCurrentPosition()
         .then(currentPosition => displayForecast(currentPosition))
         .catch(e => console.log(e));
     }));
     document.getElementById("weather_forecast_container").hidden = true;
+    let defaultInput = document.getElementById("default_to_current_location_input");
+    defaultInput.addEventListener("click", ((event) => {
+        if (event.target.checked) {
+            localStorage["defaultToCurrentLocation"] = JSON.stringify(true);
+        } else {
+            localStorage["defaultToCurrentLocation"] = JSON.stringify(false);
+        }
+    }));
+    if (localStorage["defaultToCurrentLocation"] && JSON.parse(localStorage["defaultToCurrentLocation"])) {
+        clearData();
+        defaultInput.checked = true;
+        getCurrentPosition()
+        .then(currentPosition => displayForecast(currentPosition))
+        .catch(e => console.log(e));
+    }
 }
 
 main();

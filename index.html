@@ -11,17 +11,23 @@
         <div id="location_container">
         </div>
         <br>
-        <div id="location_input_container">
-            <div id="current_location_input_container">
-                <input type="button" id="current_location_input_button" value="Use Current Location">
+        <div id="input_container">
+            <div id="location_input_container">
+                <div id="current_location_input_container">
+                    <input type="button" id="current_location_input_button" value="Use Current Location">
+                </div>
+                <div>
+                    <span>or</span>
+                </div>
+                <div id="coordinates_input_form">
+                    <label for="coordinates_input">Enter Coordinates: </label>
+                    <input type="text" id="coordinates_input" name="coordinates" placeholder="latitude, longitude">
+                    <input type="button" id="coordinates_input_button" value="Submit">
+                </div>
             </div>
-            <div>
-                <span>or</span>
-            </div>
-            <div id="coordinates_input_form">
-                <label for="coordinates_input">Enter Coordinates: </label>
-                <input type="text" id="coordinates_input" name="coordinates" placeholder="latitude, longitude">
-                <input type="button" id="coordinates_input_button" value="Submit">
+            <div id="default_checkbox_container">
+                <label for="default_to_current_location_checkbox">Use current location by default?</label>
+                <input type="checkbox" id="default_to_current_location_input" name="default_to_current_location">
             </div>
         </div>
         <br>
@@ -29,7 +35,9 @@
             <div id="current_conditions_container">
                 <h2>Current Conditions</h2>
                 <div id="current_conditions_data_container">
-                    <div id="current_temperature_and_description_container">
+                    <div id="current_main_data_container">
+                        <div id="current_conditions_image_container">
+                        </div>
                         <div id="current_temperature_container">
                             <span id="current_temperature_text"></span>
                         </div>

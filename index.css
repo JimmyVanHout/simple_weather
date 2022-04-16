@@ -77,13 +77,26 @@ h3 {
 .period_divider {
     color: black;
 }
+#current_main_data_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#latest_observation_image {
+    max-height: 7rem;
+}
+#input_container {
+    display: grid;
+    justify-content: center;
+    row-gap: 50%;
+}
 #location_input_container {
     display: flex;
     column-gap: 4%;
-    justify-content: center;
 }
-#current_temperature_and_description_container {
-    text-align: center;
+#coordinates_input_form {
+    white-space: nowrap;
 }
 #current_description_text {
     font-size: 1.5rem;
@@ -132,6 +145,9 @@ h3 {
     }
     a:visited {
         color: #D0ADF0;
+    }
+    input[type=text] {
+        background-color: #3B3B3B;
     }
     .period_divider {
         color: white;
