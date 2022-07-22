@@ -229,10 +229,13 @@ function fillHourlyForecastData(hourlyForecast) {
         let dataAndImageContainer = document.createElement("div");
         dataAndImageContainer.classList.add("hourly_forecast_data_and_image");
         dataAndImageContainer.appendChild(weatherDataContainer);
+        let imageContainer = document.createElement("div");
+        imageContainer.classList.add("hourly_forecast_image_container");
         let image = document.createElement("img");
         image.src = hourlyForecast[i].startTime ? getImageName(isDayHourly(hourlyForecast[i].startTime), hourlyForecast[i].description) : "";
         image.classList.add("hourly_forecast_image");
-        dataAndImageContainer.appendChild(image);
+        imageContainer.appendChild(image);
+        dataAndImageContainer.appendChild(imageContainer);
         periodContainer.appendChild(dataAndImageContainer);
         hourlyForecastContainer.appendChild(periodContainer);
         if (i != hourlyForecast.length - 1) {
@@ -305,10 +308,13 @@ function fillSemiDailyForecastData(semiDailyForecast) {
         let dataAndImageContainer = document.createElement("div");
         dataAndImageContainer.classList.add("semi_daily_forecast_data_and_image");
         dataAndImageContainer.appendChild(weatherDataContainer);
+        let imageContainer = document.createElement("div");
+        imageContainer.classList.add("semi_daily_forecast_image_container");
         let image = document.createElement("img");
         image.src = semiDailyForecast[i].description ? getImageName(isDaySemiDaily(semiDailyForecast[i].name), semiDailyForecast[i].description) : "";
         image.classList.add("semi_daily_forecast_image");
-        dataAndImageContainer.appendChild(image);
+        imageContainer.appendChild(image);
+        dataAndImageContainer.appendChild(imageContainer);
         periodContainer.appendChild(dataAndImageContainer);
         semiDailyForecastContainer.appendChild(periodContainer);
         if (i != semiDailyForecast.length - 1) {

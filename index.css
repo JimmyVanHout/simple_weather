@@ -59,7 +59,12 @@ h3 {
     color: red;
 }
 .semi_daily_forecast_image {
-    max-height: 4rem;
+    max-width: 100%;
+}
+.semi_daily_forecast_image_container {
+    max-width: 4rem;
+    display: flex;
+    align-items: center;
 }
 .semi_daily_forecast_data_and_image {
     justify-self: end;
@@ -67,7 +72,12 @@ h3 {
     justify-content: flex-end;
 }
 .hourly_forecast_image {
-    max-height: 4rem;
+    max-width: 100%;
+}
+.hourly_forecast_image_container {
+    max-width: 4rem;
+    display: flex;
+    align-items: center;
 }
 .hourly_forecast_data_and_image {
     justify-self: end;
