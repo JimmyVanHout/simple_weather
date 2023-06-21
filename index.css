@@ -1,0 +1,174 @@
+body {
+    width: 80%;
+    max-width: 1000px;
+    min-width: 600px;
+    margin: auto;
+    font-family: arial;
+    font-size: 1.2rem;
+    color: black;
+    background-color: white;
+}
+h1 {
+    text-align: center;
+    font-size: 3.4rem;
+}
+h2 {
+    text-align: center;
+    font-size: 2.5rem;
+}
+h3 {
+    text-align: center;
+    font-size: 1.5rem;
+}
+.scrollable_container {
+    overflow: auto;
+    border: solid;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.conditions_grid_item {
+    text-align: center;
+}
+.hourly_forecast_temperature_text {
+    font-size: 2rem;
+}
+.semi_daily_forecast_temperature_text {
+    font-size: 2rem;
+}
+.semi_daily_forecast_period_container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.semi_daily_forecast_weather_data_container {
+    text-align: right;
+    padding-right: 20px;
+    display: inline-block;
+}
+.hourly_forecast_period_container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.hourly_forecast_weather_data_container {
+    text-align: right;
+    padding-right: 20px;
+}
+.error_message {
+    text-align: center;
+    color: red;
+}
+.semi_daily_forecast_image {
+    max-width: 100%;
+}
+.semi_daily_forecast_image_container {
+    max-width: 4rem;
+    display: flex;
+    align-items: center;
+}
+.semi_daily_forecast_data_and_image {
+    justify-self: end;
+    display: inline-flex;
+    justify-content: flex-end;
+}
+.hourly_forecast_image {
+    max-width: 100%;
+}
+.hourly_forecast_image_container {
+    max-width: 4rem;
+    display: flex;
+    align-items: center;
+}
+.hourly_forecast_data_and_image {
+    justify-self: end;
+    display: inline-flex;
+    justify-content: flex-end;
+}
+.period_divider {
+    color: black;
+}
+.error {
+    text-align: center;
+    color: red;
+}
+#current_main_data_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#current_conditions_image_container {
+    max-width: 8rem;
+    display: flex;
+    align-items: center;
+}
+#latest_observation_image {
+    max-width: 100%;
+}
+#input_container {
+    display: grid;
+    justify-content: center;
+    row-gap: 50%;
+}
+#location_input_container {
+    display: flex;
+    column-gap: 4%;
+}
+#coordinates_input_form {
+    white-space: nowrap;
+}
+#current_description_text {
+    font-size: 1.5rem;
+}
+#current_temperature_text {
+    font-size: 3rem;
+}
+#hourly_forecast_data_container {
+    height: 400px;
+}
+#semi_daily_forecast_data_container {
+    height: 400px;
+}
+#conditions_grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    font-size: 1.2rem;
+}
+#location_text {
+    text-align: center;
+    font-size: 1.6rem;
+}
+#current_description_text {
+    text-align: center;
+}
+#current_temperature_text {
+    text-align: center;
+}
+#footer {
+    text-align: center;
+    font-size: 1rem;
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        width: 80%;
+        max-width: 1000px;
+        min-width: 600px;
+        margin: auto;
+        font-family: arial;
+        font-size: 1.2rem;
+        color: white;
+        background-color: #121212;
+    }
+    a:link {
+        color: #9E9EFF;
+    }
+    a:visited {
+        color: #D0ADF0;
+    }
+    input[type=text] {
+        background-color: #3B3B3B;
+    }
+    .period_divider {
+        color: white;
+    }
+}

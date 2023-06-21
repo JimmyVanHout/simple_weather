@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="A simple site for getting the weather forecast.">
+        <title>Simple Weather</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <h1>Simple Weather</h1>
+        <div id="location_container">
+        </div>
+        <br>
+        <div id="input_container">
+            <div id="location_input_container">
+                <div id="current_location_input_container">
+                    <input type="button" id="current_location_input_button" value="Use Current Location">
+                </div>
+                <div>
+                    <span>or</span>
+                </div>
+                <div id="coordinates_input_form">
+                    <label for="coordinates_input">Enter Coordinates: </label>
+                    <input type="text" id="coordinates_input" name="coordinates" placeholder="latitude, longitude">
+                    <input type="button" id="coordinates_input_button" value="Submit">
+                </div>
+            </div>
+            <div id="default_checkbox_container">
+                <label for="default_to_current_location_checkbox">Use current location by default?</label>
+                <input type="checkbox" id="default_to_current_location_input" name="default_to_current_location">
+            </div>
+        </div>
+        <br>
+        <div id="weather_forecast_container" hidden>
+            <div id="current_conditions_container">
+                <h2>Current Conditions</h2>
+                <div id="current_conditions_data_container">
+                    <div id="current_main_data_container">
+                        <div id="current_conditions_image_container">
+                        </div>
+                        <div id="current_temperature_container">
+                            <span id="current_temperature_text"></span>
+                        </div>
+                        <div id="current_description_container">
+                            <span id="current_description_text"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <div id="conditions_grid">
+                        <div id="current_wind_velocity_container" class="conditions_grid_item">
+                            <p>Wind: <span id ="current_wind_velocity_text"></span></p>
+                        </div>
+                        <div id="current_sea_level_pressure_container" class="conditions_grid_item">
+                            <p>Sea Level Pressure: <span id="current_sea_level_pressure_text"></span></p>
+                        </div>
+                        <div id="current_visibility_container" class="conditions_grid_item">
+                            <p>Visibility: <span id="current_visibility_text"></span></p>
+                        </div>
+                        <div id="current_relative_humidity_container" class="conditions_grid_item">
+                            <p>Relative Humidity: <span id="current_relative_humidity_text"></span></p>
+                        </div>
+                        <div id="current_wind_chill_container" class="conditions_grid_item">
+                            <p>Wind Chill: <span id="current_wind_chill_text"></span></p>
+                        </div>
+                        <div id="current_heat_index_container" class="conditions_grid_item">
+                            <p>Heat Index: <span id="current_heat_index_text"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2>Hourly Forecast</h2>
+            <div id="hourly_forecast_container">
+                <br>
+                <div id="hourly_forecast_graph_selector_container">
+                    <input type="radio" id="hourly_forecast_graph_selector_24_hour" name="hourly_forecast_graph_selector" value="hours_24" checked>
+                    <label for="hourly_forecast_graph_selector_24_hour">24 Hours</label>
+                    <input type="radio" id="hourly_forecast_graph_selector_week" name="hourly_forecast_graph_selector" value="hours_week">
+                    <label for="hourly_forecast_graph_selector_week">Week</label>
+                </div>
+                <div id="hourly_forecast_graph_container">
+                    <canvas id="hourly_forecast_graph"></canvas>
+                </div>
+                <br>
+                <br>
+                <div id="hourly_forecast_data_container" class="scrollable_container">
+                </div>
+            </div>
+            <div id="hourly_forecast_error_container" class="error_container" hidden>
+                <p id="hourly_forecast_error" class="error">
+                    Error getting hourly forecast data from server.
+                </p>
+            </div>
+            <br>
+            <h2>Daily Forecast</h2>
+            <div id="semi_daily_forecast_container">
+                <br>
+                <div id="semi_daily_forecast_graph_container">
+                    <canvas id="semi_daily_forecast_graph"></canvas>
+                </div>
+                <br>
+                <br>
+                <div id="semi_daily_forecast_data_container" class="scrollable_container">
+                </div>
+            </div>
+            <div id="semi_daily_forecast_error_container" class="error_container" hidden>
+                <p id="semi_daily_forecast_error" class="error">
+                    Error getting daily forecast data from server.
+                </p>
+            </div>
+            <br>
+        </div>
+        <br>
+        <div id="footer">
+            <p>Images &copy 2022 <a href="https://www.instagram.com/artbylilyxi/?hl=en" target="_blank">Lily Xi Gates</a> | Website &copy 2022 <a href="https://github.com/JimmyVanHout" target="_blank">Jimmy Van Hout</a> | Weather data provided by <a href="https://www.weather.gov/documentation/services-web-api" target="_blank">Weather.gov</a></p>
+            <p>Other sites: <a href="https://www.otfitnessdata.com" target="_blank">OTFitnessData.com</a> - Analyze your Orangetheory Fitness workout data</p>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
